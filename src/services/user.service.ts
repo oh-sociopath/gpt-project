@@ -3,6 +3,8 @@ import { database } from '../config/database';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 import { IUser, IUserTokenData } from './types/user.interface';
+import { Exception } from '../handlers/Exception';
+import { error_message, error_status } from '../handlers/error.info';
 
 class UserService {
     private salt_count = Number(process.env.SALT_COUNT);
@@ -30,13 +32,13 @@ class UserService {
         const current_user_email = current_user.email.toLowerCase();
 
         if (current_user_email !== email) {
-            throw new Error(`email doesn't match`);
+            throw new Exception(error_message.wrong_email, error_status.not_found);
         }
 
         const match: boolean = await bcrypt.compare(password, current_user.password);
 
         if (!match) {
-            throw new Error(`password doesn't match`);
+            throw new Exception(error_message.wrong_password, error_status.not_found);
         }
 
         const user: IUserTokenData = {
