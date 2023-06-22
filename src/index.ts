@@ -4,12 +4,14 @@ import * as cors from 'cors';
 import { routerShortenUrl } from './routes/createShortUrlRouter';
 import { routerRedirect } from './routes/redirectShortUrlRouter';
 import { database } from './config/database';
+import { userRouter } from './routes/userRouter';
 
 const app = express();
 
 dotenv.config();
 app.use(cors());
 app.use(express.json());
+app.use('/api', userRouter);
 app.use('/api', routerShortenUrl);
 app.use('/api', routerRedirect);
 
