@@ -1,12 +1,12 @@
 import { userService } from '../services/user.service';
 
 export class UserController {
-    register({ email, password }) {
-        return userService.register(email, password);
+    register({ username, email, password }) {
+        return userService.register(username, email, password);
     }
 
-    login() {
-        return userService.login();
+    login({ email, password }) {
+        return userService.login(email, password);
     }
 }
 

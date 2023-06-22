@@ -6,6 +6,9 @@ export  class UserEntity {
     id: number;
 
     @Column({type: 'varchar'})
+    username: string
+
+    @Column({type: 'varchar'})
     email: string
 
     @Column({type: 'varchar'})
