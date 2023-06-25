@@ -1,4 +1,5 @@
 import * as jwt from 'jsonwebtoken';
+import { UnauthorizedException } from '../handlers/UnauthorizedException';
 
 export function jwtVerify(req, res, next) {
     const checkUrl = checkUrlMatching(req.url);
@@ -7,7 +8,12 @@ export function jwtVerify(req, res, next) {
         return next()
     }
 
-    const authHeader = req.headers['authorization'];
+    const authHeader = req.headers['authorization'] || req.headers['Authorization'];
+
+    if (!authHeader) {
+        throw new UnauthorizedException();
+    }
+
     const token = authHeader.split(' ')[1];
 
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
