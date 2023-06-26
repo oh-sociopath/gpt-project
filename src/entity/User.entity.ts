@@ -1,16 +1,20 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { UrlEntity } from './Url.entity';
 
-@Entity({name: "user_entity"})
+@Entity({name: 'user_entity'})
 export  class UserEntity {
     @PrimaryGeneratedColumn('uuid')
     id: number;
 
     @Column({type: 'varchar'})
-    username: string
+    username: string;
 
     @Column({type: 'varchar'})
-    email: string
+    email: string;
 
     @Column({type: 'varchar'})
-    password: string
+    password: string;
+
+    @OneToMany(() => UrlEntity, url => url.userId)
+    urls: UrlEntity[]
 }
